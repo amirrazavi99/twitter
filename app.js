@@ -15,8 +15,13 @@ app.use(express.static('public'));
 //Routs
 
 const loginrouts =require("./routes/loginroutes.js");
+const registerrouts =require("./routes/registerroutes.js");
 
 app.use("/",loginrouts);
+app.use("/",registerrouts);
+
+
+
 const payload={
     pagetitle:"home"
 }
