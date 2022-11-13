@@ -1,0 +1,46 @@
+* {
+    background-color: aqua;
+}
+
+h1 {
+    background-color: brown;
+}
+
+.wrapper {
+
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.logincontainer {
+
+    padding: 20px;
+    width: 80%;
+    max-width: 500px;
+    border: 1px solid;
+    background-color: red;
+
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    border-radius: 3px;
+
+}
+
+input[type=text],
+input[type=password] {
+    padding: 10px;
+    border-radius: 2px;
+    border: 1px solid aqua;
+    background-color: azure;
+    margin: 10px;
+
+}
+
+input[type=submit] {
+    background-color: green;
+    margin: 10px;
+}

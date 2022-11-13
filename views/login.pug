@@ -1,0 +1,10 @@
+extends layout/login-layout.pug
+
+block content
+    .logincontainer
+        h1 Login
+        form(method="post")
+            input(type="text", name="logusername",placeholder="username",required="true")
+            input(type="password", name="logpassword",placeholder="password",required="true")
+            input(type="submit", value="login")
+        a(href="/register") Register 
