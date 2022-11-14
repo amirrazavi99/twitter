@@ -6,7 +6,7 @@ class database{
     }
 
     connect(){
-        mongoose.connect(DB, { useNewUrlParser: true, useUnifiedTopology: true })
+        mongoose.connect(DB, { useNewUrlParser: false, useUnifiedTopology: false })
         .then(()=>{
                 console.log("database connection seccussfull" );
         }).catch((err)=>{
