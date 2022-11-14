@@ -3,12 +3,31 @@ extends layout/register-layout.pug
 block content
     .logincontainer
         h1 Register
-        form(method="post")
+        form#registerForm(method="post")
+            p.errorMassage #{errorMassage}
             input(type="text", name="firstname",placeholder="firstname",required="true")
             input(type="text", name="lastname",placeholder="lastname",required="true")
-            input(type="text", name="username",placeholder="username",required="true") 
+            input(type="text", name="username",placeholder="username") 
             input(type="email", name="email",placeholder="email",required="true")
-            input(type="password", name="password",placeholder="password",required="true")
-            input(type="password", name="conformpassword",placeholder="password",required="true")
+            input#password(type="password", name="password",placeholder="password",required="true")
+            input#conformpassword(type="password", name="conformpassword",placeholder="password",required="true")
             input(type="submit", value="register")
-        a(href="/login") Login 
+        a(href="/login") Login
+
+    script.
+            const paasswordfeild = document.getElementById("password");
+            const conformpaasswordfeild = document.getElementById("conformpassword");
+            const form = document.getElementById("registerForm");
+
+            funcion validateform(){
+                if(paasswordfeild.value != conformpaasswordfeild.value){
+                    alert("password do not match");
+                }
+                else{
+                    form.submit();
+                }
+            }
+           
+    
+    
+

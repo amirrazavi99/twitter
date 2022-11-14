@@ -1,6 +1,13 @@
+const bodyParser = require('body-parser');
 const express = require('express');
 const app =express();
 const middleware =require("./middleware");
+const mongoose=require("./database.js");
+
+
+
+app.use(express.urlencoded());
+
 PORT =3000;
 
 const server =app.listen(PORT,()=>console.log(`run server ${PORT}`))
@@ -16,6 +23,7 @@ app.use(express.static('public'));
 
 const loginrouts =require("./routes/loginroutes.js");
 const registerrouts =require("./routes/registerroutes.js");
+const database = require('./database');
 
 app.use("/",loginrouts);
 app.use("/",registerrouts);
