@@ -1,5 +1,7 @@
 const express=require('express');
 const User=require('../schema/UserSchema')
+const bcrypt =require("bcrypt")
+
 
 
 const router=express.Router();
@@ -35,17 +37,20 @@ router.post('/register',async(req,res)=>{
         if(user== null){
 
             const data =req.body;
+            data.password=await bcrypt.hash(password,10);
 
             User.create(data)
-            .then((createuser)=>{
-                console.log(createuser);
+            .then((user)=>{
+                req.session.user=user
+                return res.redirect("/")
             })
         }else{
             if(email==user.email){
-                console.log("email");
+                payload.errorMassage="email ghblan estefadeh shode ";
             }else{
-                console.log("paswordusername");
+                payload.errorMassage="email ghblan estefadeh shode ";
             }
+            res.status(200).render("register",payload)
         }
    
 

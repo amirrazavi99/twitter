@@ -4,6 +4,7 @@ block content
     .logincontainer
         h1 Login
         form(method="post")
+            p.errorcontainer #{erorrMassage}
             input(type="text", name="logusername",placeholder="username",required="true")
             input(type="password", name="logpassword",placeholder="password",required="true")
             input(type="submit", value="login")

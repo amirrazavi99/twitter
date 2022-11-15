@@ -3,10 +3,18 @@ const express = require('express');
 const app =express();
 const middleware =require("./middleware");
 const mongoose=require("./database.js");
+const session =require("express-session")
 
 
 
 app.use(express.urlencoded());
+
+app.use(session({
+    secret:"secretkey",
+    resave: true,
+    saveUninitialized: false,
+
+}))
 
 PORT =3000;
 
@@ -30,9 +38,12 @@ app.use("/",registerrouts);
 
 
 
-const payload={
-    pagetitle:"home"
-}
-app.get("/",middleware.requirelogin,(req,res,next)=>{
+
+app.get("/", middleware.requirelogin ,(req , res , next)=>{
+    const payload={
+        pagetitle:"home",
+        userLogin: req.session.user
+    }
+
     res.status(201).render("home",payload)
 })
