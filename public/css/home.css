@@ -1,0 +1,66 @@
+:root {
+    --blue: blue;
+    --buttonhover: #d4efff;
+    --lightGreay: rgb(230, 236, 240);
+    --spacing: 15px
+}
+
+
+a {
+    color: inherit;
+}
+
+nav a .blue {
+    color: var(--blue);
+}
+
+nav {
+    background-color: #d4efff;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    height: 100%;
+}
+
+nav a:hover {
+    background-color: var(--buttonhover);
+    color: var(--blue);
+    border-radius: 50%;
+}
+
+nav a {
+    display: flex;
+    padding: 20px;
+    font-size: 30px;
+    width: 55px;
+    height: 55;
+    align-items: center;
+    justify-content: center;
+    color: #212529;
+
+}
+
+
+.mainSectionContainer {
+    background-color: #d4efff;
+    padding: 0;
+    border-left: 1px solid var(--lightGreay);
+    display: flex;
+    flex-direction: column;
+}
+
+.titlecontainer {
+    height: 53px;
+
+    padding: 0px var(--spacing);
+}
+
+.titlecontainer h1 {
+    flex: 1
+}
+
+h1 {
+    font-size: 19px;
+    font-weight: 800;
+    margin: 0;
+}

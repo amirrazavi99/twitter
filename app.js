@@ -31,18 +31,24 @@ app.use(express.static('public'));
 
 const loginrouts =require("./routes/loginroutes.js");
 const registerrouts =require("./routes/registerroutes.js");
+const logoutrouts =require("./routes/logout.js");
+
+//connect datbase
 const database = require('./database');
 
 app.use("/",loginrouts);
 app.use("/",registerrouts);
+app.use("/",logoutrouts);
+
+
 
 
 
 
 app.get("/", middleware.requirelogin ,(req , res , next)=>{
     const payload={
-        pagetitle:"home",
-        userLogin: req.session.user
+        pagetitle:"Home",
+        userLoggedIn: req.session.user
     }
 
     res.status(201).render("home",payload)
