@@ -1,5 +1,6 @@
-const { MongooseModule } = require("@nestjs/mongoose");
+
 const mongoose=require("mongoose");
+
 
 const UserSchema =new mongoose.Schema({
     firstName: {
@@ -33,7 +34,8 @@ const UserSchema =new mongoose.Schema({
         type:String,
         default: "./images/profilePic.png"
     }
-},{timestamps:true})
+},
+{timestamps:true})
 const User =mongoose.model("User",UserSchema);
 
 module.exports=User;
