@@ -33,13 +33,18 @@ const loginrouts =require("./routes/loginroutes.js");
 const registerrouts =require("./routes/registerroutes.js");
 const logoutrouts =require("./routes/logout.js");
 
+//api posts
+
+
+const postrouts =require("./routes/api/posts.js");
+
 //connect datbase
 const database = require('./database');
 
 app.use("/",loginrouts);
 app.use("/",registerrouts);
 app.use("/",logoutrouts);
-
+app.use("/",postrouts);
 
 
 
