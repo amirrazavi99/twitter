@@ -53,7 +53,8 @@ app.use("/",postrouts);
 app.get("/", middleware.requirelogin ,(req , res , next)=>{
     const payload={
         pagetitle:"Home",
-        userLoggedIn: req.session.user
+        userLoggedIn: req.session.user,
+        userLoggedInreq: JSON.stringify(req.session.user)
     }
 
     res.status(201).render("home",payload)

@@ -19,7 +19,7 @@ router.post("/login",async(req,res)=>{
                 { email:req.body.email }
               ]
         })
-        .catch((erorr)=>{
+       .catch((erorr)=>{r
             console.log(erorr);
             payload.erorrMassage="somting went find";
             res.status(200).render("login",payload)

@@ -4,6 +4,8 @@
     --lightGreay: rgb(230, 236, 240);
     --spacing: 15px;
     --blueLight: #32a4b3;
+    --greybutoonText: rgba(47, 69, 135, 0.12);
+    --red: rgb(226, 39, 24);
 }
 
 * {
@@ -108,4 +110,76 @@ h1 {
 
 #submitPostbutton:disabled {
     background-color: var(--blueLight);
+    border-radius: 40%;
+}
+
+.post {
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing);
+    cursor: pointer;
+    border-bottom: 1px solid var(--lightGreay);
+}
+
+.mainContainer {
+    width: 50px;
+    height: 50px;
+}
+
+
+.userImageContainer img {
+    width: 100%;
+    border-radius: 50%;
+    background-color: white;
+}
+
+.displayName {
+    font-weight: bold;
+}
+
+.postfooter {
+    display: flex;
+    text-align: center;
+}
+
+.postfooter .postButtonContainer {
+    flex: 1;
+    display: flex;
+}
+
+
+.postfooter .postButtonContainer button {
+    padding: 0 5px;
+}
+
+buttonn {
+    background-color: transparent;
+    border: none;
+    color: var(--greybutoonText);
+
+}
+
+.header a:hover {
+    text-decoration: underline;
+}
+
+.header a,
+.header span {
+    padding-right: 5px;
+}
+
+.postButtonContainer buttonn:hover {
+    background-color: #d4efff;
+    color: var(--blue);
+    border-radius: 50%;
+}
+
+buttonn i,
+buttonn span {
+    pointer-events: none;
+}
+
+.postButtonContainer.red buttonn.active {
+    color: var(--red);
+
 }
