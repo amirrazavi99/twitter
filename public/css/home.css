@@ -6,6 +6,10 @@
     --blueLight: #32a4b3;
     --greybutoonText: rgba(47, 69, 135, 0.12);
     --red: rgb(226, 39, 24);
+    --backgroundred: rgb(226, 39, 24, 0.1);
+    --green: rgb(23, 192, 99);
+    --backgroundgreen: rgb(23, 192, 99, 0.1);
+    --greyText: rgb(101, 119, 134);
 }
 
 * {
@@ -181,5 +185,28 @@ buttonn span {
 
 .postButtonContainer.red buttonn.active {
     color: var(--red);
+
+}
+
+.postButtonContainer.red buttonn:hover {
+    color: var(--backgroundred);
+
+}
+
+.postButtonContainer.green buttonn.active {
+    color: var(--green);
+
+}
+
+.postButtonContainer.green buttonn:hover {
+    color: var(--backgroundgreen);
+
+}
+
+.postActionContainer {
+    padding-left: 35px;
+    font-size: 13px;
+    color: var(--greyText);
+    margin-bottom: 5px;
 
 }

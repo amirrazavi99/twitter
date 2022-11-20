@@ -29,7 +29,7 @@ router.post("/login",async(req,res)=>{
             const result = await bcrypt.compare(req.body.logpassword, user.password)
             
             if(result == true){
-                console.log(user);
+                
                 req.session.user=user;
                 return res.redirect("/")
             }else{

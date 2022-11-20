@@ -34,6 +34,32 @@ $("#submitPostbutton").click((event)=>{
 
 })
 
+$(document).on("click",".retweetButton",(event)=>{
+    const button=$(event.target);
+    const postid=getpostFormId(button)
+
+    if(postid == undefined) return alert("not id");
+
+    $.ajax({
+        url:`/api/posts/${postid}/retweet`,
+        type:"POST",
+        success:(postData)=>{
+            button.find("span").text(postData.retweetUsers.length || "")
+
+            if(postData.retweetUsers.includes(userLoggedIn._id)){
+                
+                button.addClass("active");
+            }else{
+               
+                
+                button.removeClass("active");
+            }
+        }
+
+
+    })
+})
+
 
 $(document).on("click",".likeButton",(event)=>{
     const button=$(event.target);
@@ -78,23 +104,40 @@ function getpostFormId(element){
 
 
 function CreatePostHtml(postData){
+    if(postData == null) return alert("post object is null");
 
+    let isRetweet = postData.retweetData !== undefined;
+    let retweetedBy = isRetweet ? postData.postedBy.userName : null;  
+    postData = isRetweet ? postData.retweetData : postData;
+
+    
+    
     let postedBy = postData.postedBy;
 
-    if(postedBy._id == undefined){
-        return alert("not pupulate");
+    if(postedBy._id === undefined) {
+        return console.log("User object not populated");
     }
 
-    let display =postedBy.firstName +" "+ postedBy.lastName;
+    let display = postedBy.firstName + " " + postedBy.lastName;
+    let timestamp = timeDifference(new Date(), new Date(postData.createdAt));
 
-    let timestamp =timeDifference(new Date(),new Date(postData.createdAt));
+    let likeButtonActiveClass = postData.likes.includes(userLoggedIn._id) ? "active" : "";
+    let retweetButtonActiveClass = postData.retweetUsers.includes(userLoggedIn._id) ? "active" : "";
 
-    const likeButtonActive=postData.likes.includes(userLoggedIn._id) ? "active":"";
-                
+    let retweetText = '';
+    if(isRetweet) {
+        retweetText = `<span>
+                        <i class='fas fa-retweet'></i>
+                        Retweeted by <a href='/profile/${retweetedBy}'>@${retweetedBy}</a>    
+                    </span>`
+    }
 
 
 
     return `<div class='post' data-id="${postData._id}">
+                <div class='postActionContainer'>
+                ${retweetText}
+                </div>
                 <div class='mainContainer'>
                      <div class='userImageContainer'>
                         <img src='${postedBy.profilePic}'>
@@ -111,17 +154,18 @@ function CreatePostHtml(postData){
                     </div>
                     <div class ='postfooter'>
                         <div class ='postButtonContainer'>
-                            <buttonn>
+                            <buttonn  data-toggle='modal' data-target='replyModal'>
                                 <i class="fa fa-comment"></i>
                             </buttonn>
                         </div>
                         <div class ='postButtonContainer green'>
-                            <buttonn class="retweetButton">
+                            <buttonn class="retweetButton ${retweetButtonActiveClass}">
                                 <i class="fa fa-retweet"></i>
+                                <span>${postData.retweetUsers.length || ""}</span>
                             </buttonn>
                         </div>
                         <div class ='postButtonContainer red'>
-                            <buttonn class="likeButton ${likeButtonActive}">
+                            <buttonn class="likeButton ${likeButtonActiveClass}">
                                 <i class="fa fa-heart"></i>
                                 <span>${postData.likes.length || ""}</span>
                             </buttonn>
@@ -136,13 +180,13 @@ function CreatePostHtml(postData){
 
 function timeDifference(current, previous) {
 
-    var msPerMinute = 60 * 1000;
-    var msPerHour = msPerMinute * 60;
-    var msPerDay = msPerHour * 24;
-    var msPerMonth = msPerDay * 30;
-    var msPerYear = msPerDay * 365;
+    const msPerMinute = 60 * 1000;
+    const msPerHour = msPerMinute * 60;
+    const msPerDay = msPerHour * 24;
+    const msPerMonth = msPerDay * 30;
+    const msPerYear = msPerDay * 365;
 
-    var elapsed = current - previous;
+    const elapsed = current - previous;
 
     if (elapsed < msPerMinute) {
          return Math.round(elapsed/1000) + ' seconds ago';   
