@@ -23,6 +23,10 @@ const PostSchema =new mongoose.Schema({
     retweetData:{
         type: mongoose.Types.ObjectId,
         ref: "Post",
+    },
+    replyTo:{
+        type: mongoose.Types.ObjectId,
+        ref: "Post",
     }
 
 },

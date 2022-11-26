@@ -14,13 +14,35 @@ mixin createReplyModel(userLoggedIn)
     #replyModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='replyModalLabel', aria-hidden='true')
         .modal-dialog(role='document')
             .modal-content
-            .modal-header
-                h5#replyModalLabel.modal-title Modal title
-                button.close(type='button', data-dismiss='modal', aria-label='Close')
-                span(aria-hidden='true') &times;
-            .modal-body
-                | ...
-            .modal-footer
-                button.btn.btn-secondary(type='button', data-dismiss='modal') Close
-                button#submitReplyButton.btn.btn-primary(type='button' disabled='') Reply
+                .modal-header
+                    h5#replyModalLabel.modal-title Reply
+                    button.close(type='button', data-dismiss='modal', aria-label='Close')
+                    span(aria-hidden='true') &times;
+                .modal-body
+                        #orginalPostContainer
+                        .postFormContainer
+                            .imageFormContainer
+                                img(src=userLoggedIn.profilePic, alt="User's profile pic")
+                            .textareaContainer
+                                textarea#replyTextarea(placeholder="whate is happening?")
+                .modal-footer
+                    button.btn.btn-secondary(type='button', data-dismiss='modal') Close
+                    button#submitReplyButton.btn.btn-primary(type='button' disabled='') Reply
 
+mixin createDeletePostModel()
+    #deletePostModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='deletePostModalLabel', aria-hidden='true')
+        .modal-dialog(role='document')
+            .modal-content
+                .modal-header
+                    h5#deletePostModalLabel.modal-title Delete the post
+                    button.close(type='button', data-dismiss='modal', aria-label='Close')
+                    span(aria-hidden='true') &times;
+                .modal-body
+                        p you won"t be able to delete 
+                .modal-footer
+                    button.btn.btn-secondary(type='button', data-dismiss='modal') Close
+                    button#deletePostButton.btn.btn-primary(type='button' disabled='') Delete
+
+mixin createPostModals(userLoggedIn)
+        +createReplyModel(userLoggedIn)
+        +createDeletePostModel()

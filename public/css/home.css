@@ -210,3 +210,35 @@ buttonn span {
     margin-bottom: 5px;
 
 }
+
+.modal .postFormContainer {
+    border: none;
+    padding: o;
+    padding-top: var(--spacing);
+}
+
+.modal .post {
+    padding: 0;
+    padding-bottom: var(--spacing);
+}
+
+.replyFlag {
+    margin-bottom: 5px;
+}
+
+.replyFlag a {
+    color: var(--blue);
+}
+
+.post.largeFont .postBody,
+.post.largeFont .postFooter {
+    font-size: 23px;
+}
+
+.postcontentContainer .header {
+    display: flex;
+}
+
+.postcontentContainer .header .date {
+    flex: 1;
+}

@@ -32,6 +32,7 @@ app.use(express.static('public'));
 const loginrouts =require("./routes/loginroutes.js");
 const registerrouts =require("./routes/registerroutes.js");
 const logoutrouts =require("./routes/logout.js");
+const postPagerouts =require("./routes/postroutes.js");
 
 //api posts
 
@@ -45,6 +46,7 @@ app.use("/",loginrouts);
 app.use("/",registerrouts);
 app.use("/",logoutrouts);
 app.use("/",postrouts);
+app.use("/", middleware.requirelogin ,postPagerouts);
 
 
 

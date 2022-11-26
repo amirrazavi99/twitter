@@ -4,20 +4,30 @@ const { populate } = require('../../schema/UserSchema');
 const User = require('../../schema/UserSchema');
 const router=express.Router();
 
-router.get("/api/posts", (req, res, next) => {
-    Post.find()
-    .populate("postedBy")
-    .populate("retweetData")
-    .sort({ "createdAt": -1 })
-    .then(async (results) => {
-        results = await User.populate(results, { path:'retweetData.postedBy'});
-        res.status(200).send(results);
-        console.log(results);
-    })
-    .catch(error => {
-        console.log(error);
-        res.sendStatus(400);
-    })
+router.get("/api/posts", async(req, res, next) => {
+    const results= await getPosts({});
+    res.status(200).send(results);
+})
+
+
+router.get("/api/posts/:id", async(req, res, next) => {
+    
+    const postId = req.params.id;
+
+    let postData = await getPosts({ _id: postId });
+    postData = postData[0];
+
+    let results = {
+        postData: postData
+    }
+
+    if(postData.replyTo !== undefined) {
+        results.replyTo = postData.replyTo;
+    }
+
+    results.replies = await getPosts({ replyTo: postId });
+
+    res.status(200).send(results);
 })
 
 
@@ -31,16 +41,19 @@ router.post('/api/posts',async(req,res)=>{
     
     const postData={
         content:req.body.content,
-
+    
         postedBy:req.session.user
+    }
+
+    if(req.body.replyTo) {
+        postData.replyTo = req.body.replyTo;
     }
 
     Post.create(postData)
     .then(newPost=>{
         User.populate(newPost,{path:"postedBy"})
         .then(neewPost=>{
-            // console.log(neewPost);
-        
+
             res.status(201).send(neewPost)})
             .catch(error=>{
                 console.log(error);
@@ -64,11 +77,15 @@ router.put('/api/posts/:id/likes',async(req,res)=>{
     
     const option =isLiked ? "$pull" : "$addToSet";
 
-    req.session.user =await User.findByIdAndUpdate(userid ,{ [option] :{likes:postid}},{new :true})
-    .catch((error)=>{
+        console.log(error);
+        res.sendStatus(400);
+
+    req.session.user = await User.findByIdAndUpdate(userid, { [option]: { likes: postid } }, { new: true})
+    .catch(error => {
         console.log(error);
         res.sendStatus(400);
     })
+    
 
 
     const postData =await Post.findByIdAndUpdate(postid ,{ [option] :{likes:userid}},{new :true})
@@ -124,6 +141,22 @@ router.post('/api/posts/:id/retweet', async (req, res, next) => {
 
     res.status(200).send(post)
 })
+
+
+async function getPosts(filter) {
+    let results = await Post.find(filter)
+    .populate("postedBy")
+    .populate("retweetData")
+    .populate("replyTo")
+    .sort({ "createdAt": -1 })
+    .catch(error => console.log(error))
+     results =await User.populate(results, { path: "replyTo.postedBy"});
+     
+     results= await User.populate(results, { path: "retweetData.postedBy"});
+    
+     return results
+    
+}
 
 
 module.exports=router
