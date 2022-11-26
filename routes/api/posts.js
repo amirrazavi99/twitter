@@ -1,6 +1,6 @@
 const express=require('express');
 const Post = require('../../schema/PostSchema');
-const { populate } = require('../../schema/UserSchema');
+
 const User = require('../../schema/UserSchema');
 const router=express.Router();
 
@@ -77,8 +77,8 @@ router.put('/api/posts/:id/likes',async(req,res)=>{
     
     const option =isLiked ? "$pull" : "$addToSet";
 
-        console.log(error);
-        res.sendStatus(400);
+        
+
 
     req.session.user = await User.findByIdAndUpdate(userid, { [option]: { likes: postid } }, { new: true})
     .catch(error => {
@@ -88,13 +88,13 @@ router.put('/api/posts/:id/likes',async(req,res)=>{
     
 
 
-    const postData =await Post.findByIdAndUpdate(postid ,{ [option] :{likes:userid}},{new :true})
-    .catch((error)=>{
+    const postData =await Post.findByIdAndUpdate(postid ,{ [option] :{ likes: userid }},{new :true})
+    .catch( error =>{
         console.log(error);
         res.sendStatus(400);
     })
   
-    console.log(postData);
+    
     
     res.status(201).send(postData)
     
@@ -142,7 +142,14 @@ router.post('/api/posts/:id/retweet', async (req, res, next) => {
     res.status(200).send(post)
 })
 
-
+router.delete("/api/posts/:id", (req, res, next) => {
+    Post.findByIdAndDelete(req.params.id)
+    .then(() => res.sendStatus(202))
+    .catch(error => {
+        console.log(error);
+        res.sendStatus(400);
+    })
+})
 async function getPosts(filter) {
     let results = await Post.find(filter)
     .populate("postedBy")

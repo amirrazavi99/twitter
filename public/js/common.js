@@ -90,6 +90,29 @@ $("#replyModal").on("show.bs.modal", (event) => {
 
 $("#replyModal").on("hidden.bs.modal", (event) => $("#orginalPostContainer").html(""));
  
+$("#deletePostModal").on("show.bs.modal", (event) => {
+    const button = $(event.relatedTarget);
+    const postId = getpostFormId(button);
+    $("#deletePostButton").data("id", postId);
+})
+
+$("#deletePostButton").click((event) => {
+    const postId = $(event.target).data("id");
+
+    $.ajax({
+        url: `/api/posts/${postId}`,
+        type: "DELETE",
+        success: (data, status, xhr) => {
+
+            if(xhr.status != 202) {
+                alert("could not delete post");
+                return;
+            }
+            
+            location.reload();
+        }
+    })
+})
 
 
 
@@ -199,7 +222,7 @@ function CreatePostHtml(postData , largeFont =false){
     }
     let buttons = "";
     if (postData.postedBy._id == userLoggedIn._id) {
-        buttons = `<button data-id="${postData._id}" data-toggle="modal" data-target="#deletePostModal"><i class='fas fa-times'></i></button>`;
+        buttons = `<buttonn data-id="${postData._id}" data-toggle="modal" data-target="#deletePostModal" ><i class='fas fa-times'></i></buttonn>`;
     }
     
 
@@ -214,10 +237,10 @@ function CreatePostHtml(postData , largeFont =false){
                 </div>
                 <div class='postcontentContainer'>
                     <div class ='header'>
-                    <a href='/profile/${postedBy.userName}' class="displayName">@${display}</a>
-                    <span class='username'>${postedBy.userName}</span>
-                    <span class='date'>${timestamp}</span>
-                    ${buttons}
+                        <a href='/profile/${postedBy.userName}' class="displayName">@${display}</a>
+                        <span class='username'>${postedBy.userName}</span>
+                        <span class='date'>${timestamp}</span>
+                        ${buttons}
                     </div>
                     ${replyFlag}
                     <div class ='postbody'>
