@@ -1,5 +1,6 @@
 const mongoose=require('mongoose');
-const DB ="mongodb://localhost:27017";
+require('dotenv').config();
+const DB =process.env.DB;
 class database{
     constructor(){
         this.connect();

@@ -4,6 +4,7 @@ const app =express();
 const middleware =require("./middleware");
 const mongoose=require("./database.js");
 const session =require("express-session")
+require('dotenv').config();
 
 
 
@@ -16,7 +17,7 @@ app.use(session({
 
 }))
 
-PORT =3000;
+PORT =process.env.PORT
 
 const server =app.listen(PORT,()=>console.log(`run server ${PORT}`))
 
